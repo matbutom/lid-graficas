@@ -5,7 +5,7 @@ export const handler = ({ inputs, mechanic, sketch }) => {
   let qrCodeImage;
 
   sketch.preload = () => {
-    qrCodeImage = sketch.loadImage('qr_lid_ig.png'); // Precargamos la imagen
+    qrCodeImage = sketch.loadImage('assets/qr_lid_ig.png'); // Ruta actualizada con el nuevo nombre
   };
 
   sketch.setup = () => {
