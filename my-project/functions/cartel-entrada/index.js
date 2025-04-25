@@ -1,79 +1,74 @@
 export const handler = ({ inputs, mechanic, sketch }) => {
-  const { width, height, text, color1, color2, radiusPercentage } = inputs;
+  const { textLine1, textLine2, textLine3, color1 } = inputs;
+  const width = 1080;
+  const height = 1350;
+  let qrCodeImage;
 
-  const center = [width / 2, height / 2];
-  const radius = ((height / 2) * radiusPercentage) / 100;
-  const angle = Math.random() * Math.PI * 2;
+  sketch.preload = () => {
+    qrCodeImage = sketch.loadImage('assets/qr_lid_ig.png'); // Ruta actualizada con el nuevo nombre
+  };
 
   sketch.setup = () => {
     sketch.createCanvas(width, height);
   };
 
   sketch.draw = () => {
-    sketch.background("#F4F4F4");
+    sketch.background("#FFFFFF");
     sketch.noStroke();
-
-    sketch.translate(...center);
-    sketch.rotate(angle);
-
     sketch.fill(color1);
-    sketch.arc(0, 0, 2 * radius, 2 * radius, -sketch.PI, 0);
-    sketch.fill(color2);
-    sketch.arc(0, 0, 2 * radius, 2 * radius, 0, sketch.PI);
+    sketch.textAlign(sketch.CENTER, sketch.TOP);
 
-    sketch.rotate(-angle);
-    sketch.fill("#000000");
-    sketch.textAlign(sketch.CENTER, sketch.BOTTOM);
+    const margin = width * 0.1;
+    const lineHeight = height / 15;
+
+    sketch.textSize(lineHeight * 1.2);
     sketch.textStyle(sketch.BOLD);
-    sketch.textSize(height / 10);
-    sketch.text(text, 0, height / 2 - height / 20);
+    sketch.text(textLine1, margin, height * 0.1, width - 2 * margin);
+
+    sketch.textSize(lineHeight);
+    sketch.textStyle(sketch.NORMAL);
+    sketch.text(textLine2, margin, height * 0.35, width - 2 * margin);
+
+    sketch.textSize(lineHeight * 0.8);
+    sketch.text(textLine3, margin, height * 0.55, width - 2 * margin);
+
+    // Dibujar el código QR arriba a la derecha de 150x150 px
+    if (qrCodeImage) {
+      const qrCodeSize = 150; // Tamaño del código QR
+      const qrCodeX = width - qrCodeSize - 50; // Posición X: Derecha con margen de 50px
+      const qrCodeY = 50; // Posición Y: Arriba con margen de 50px
+      sketch.image(qrCodeImage, qrCodeX, qrCodeY, qrCodeSize, qrCodeSize);
+    }
 
     mechanic.done();
   };
 };
 
 export const inputs = {
-  width: {
-    type: "number",
-    default: 400
-  },
-  height: {
-    type: "number",
-    default: 300
-  },
-  text: {
+  textLine1: {
     type: "text",
-    default: "mechanic"
+    default: "lab interacción digital",
+    label: "Título"
+  },
+  textLine2: {
+    type: "text",
+    default: "@lid.udp",
+    label: "Subtítulo"
+  },
+  textLine3: {
+    type: "text",
+    default: "salvador sanfuentes 2221 3er piso",
+    label: "Cuerpo de Texto"
   },
   color1: {
     type: "color",
     model: "hex",
-    default: "#E94225"
-  },
-  color2: {
-    type: "color",
-    model: "hex",
-    default: "#002EBB"
-  },
-  radiusPercentage: {
-    type: "number",
-    default: 40,
-    min: 0,
-    max: 100,
-    slider: true
+    default: "#000000",
+    label: "Color del Texto"
   }
 };
 
-export const presets = {
-  medium: {
-    width: 800,
-    height: 600
-  },
-  large: {
-    width: 1600,
-    height: 1200
-  }
-};
+export const presets = {};
 
 export const settings = {
   engine: require("@mechanic-design/engine-p5")
