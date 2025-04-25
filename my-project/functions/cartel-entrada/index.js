@@ -1,11 +1,11 @@
 export const handler = ({ inputs, mechanic, sketch }) => {
-  const { textLine1, textLine2, textLine3, color1 } = inputs;
+  const { textLine0, textLine1, textLine2, textLine3, color1 } = inputs;
   const width = 1080;
   const height = 1350;
   let qrCodeImage;
 
   sketch.preload = () => {
-    qrCodeImage = sketch.loadImage('assets/qr_lid_ig.png'); // Ruta actualizada con el nuevo nombre
+    // qrCodeImage = sketch.loadImage('assets/qr_lid_ig.png'); // Ruta actualizada con el nuevo nombre
   };
 
   sketch.setup = () => {
@@ -23,21 +23,24 @@ export const handler = ({ inputs, mechanic, sketch }) => {
 
     sketch.textSize(lineHeight * 1.2);
     sketch.textStyle(sketch.BOLD);
-    sketch.text(textLine1, margin, height * 0.1, width - 2 * margin);
+    sketch.text(textLine0, margin, height * 0.1, width - 2 * margin);
 
     sketch.textSize(lineHeight);
     sketch.textStyle(sketch.NORMAL);
-    sketch.text(textLine2, margin, height * 0.35, width - 2 * margin);
+    sketch.text(textLine1, margin, height * 0.35, width - 2 * margin);
 
     sketch.textSize(lineHeight * 0.8);
-    sketch.text(textLine3, margin, height * 0.55, width - 2 * margin);
+    sketch.text(textLine2, margin, height * 0.50, width - 2 * margin);
+
+    sketch.textSize(lineHeight * 0.8);
+    sketch.text(textLine3, margin, height * 0.54, width - 2 * margin);
 
     // Dibujar el código QR arriba a la derecha de 150x150 px
     if (qrCodeImage) {
       const qrCodeSize = 150; // Tamaño del código QR
       const qrCodeX = width - qrCodeSize - 50; // Posición X: Derecha con margen de 50px
       const qrCodeY = 50; // Posición Y: Arriba con margen de 50px
-      sketch.image(qrCodeImage, qrCodeX, qrCodeY, qrCodeSize, qrCodeSize);
+      // sketch.image(qrCodeImage, qrCodeX, qrCodeY, qrCodeSize, qrCodeSize);
     }
 
     mechanic.done();
@@ -45,20 +48,25 @@ export const handler = ({ inputs, mechanic, sketch }) => {
 };
 
 export const inputs = {
-  textLine1: {
+  textLine0: {
     type: "text",
     default: "lab interacción digital",
-    label: "Título"
+    label: "nombreLab"
+  },
+  textLine1: {
+    type: "text",
+    default: "@lid.udp",
+    label: "instagram"
   },
   textLine2: {
     type: "text",
-    default: "@lid.udp",
-    label: "Subtítulo"
+    default: "salvador sanfuentes 2221",
+    label: "direccion0"
   },
   textLine3: {
     type: "text",
-    default: "salvador sanfuentes 2221 3er piso",
-    label: "Cuerpo de Texto"
+    default: "tercer piso",
+    label: "direccion1"
   },
   color1: {
     type: "color",
