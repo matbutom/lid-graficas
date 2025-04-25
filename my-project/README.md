@@ -2,7 +2,7 @@
 
 If you haven't already, move your working directory to this project to run Mechanic commands:
 
-```
+```bash
 cd path/to/project
 ```
 
@@ -10,7 +10,7 @@ cd path/to/project
 
 To run and see your design functions in action right away, just call:
 
-```
+```bash
 npm run dev
 ```
 
@@ -18,13 +18,13 @@ This will bundle and serve in place a web app that you can open and interact wit
 
 Alternatively, you can first built the app, which will generate a folder with the code transformed:
 
-```
+```bash
 npm run build
 ```
 
 And to serve that already built app and interact with it in a browser, run:
 
-```
+```bash
 npm run serve
 ```
 
@@ -32,7 +32,7 @@ npm run serve
 
 There's two ways of doing it. First, running a command that will ask you a couple of questions to create a new design functions from a base (template, example or blank):
 
-```
+```bash
 npm run new
 ```
 
