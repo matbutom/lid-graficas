@@ -1,6 +1,6 @@
 export const handler = ({ inputs, mechanic, sketch }) => {
   // inputs
-  const { labNombre, labSemestre, labTexto, labProfeMasInfo, labProfeNombre, labProfeMail, color1, imagen } = inputs;
+  const { labNombre, labSemestre, labInstagram, socioNombre, socioInstagram,labTexto, labProfeMasInfo, labProfeNombre, labProfeMail, color1, imagen } = inputs;
   const widthCarta = 8.5;
   const heightCarta = 11;
   const escala = 100;
@@ -32,15 +32,27 @@ export const handler = ({ inputs, mechanic, sketch }) => {
     const margin = 10 * width / 100;
     const lineHeight = 5 * height / 100;
 
-    sketch.textSize(100 * lineHeight / 100);
+    sketch.textSize(70 * lineHeight / 100);
     sketch.textStyle(sketch.BOLD);
     sketch.text(labSemestre, margin, 5 * height / 100, width - 2 * margin);
 
-    sketch.textSize(120 * lineHeight / 100);
+    sketch.textSize(70 * lineHeight / 100);
     sketch.textStyle(sketch.NORMAL);
-    sketch.text(labNombre, margin, 20 * height / 100, width - 2 * margin);
+    sketch.text(labNombre, margin, 15 * height / 100, width - 2 * margin);
 
-  
+    sketch.textSize(70 * lineHeight / 100);
+    sketch.textStyle(sketch.NORMAL);
+    sketch.text(labInstagram, margin, 20 * height / 100, width - 2 * margin);
+
+    sketch.textSize(70 * lineHeight / 100);
+    sketch.textStyle(sketch.NORMAL);
+    sketch.text(socioNombre, margin, 30 * height / 100, width - 2 * margin);
+
+    sketch.textSize(70 * lineHeight / 100);
+    sketch.textStyle(sketch.NORMAL);
+    sketch.text(socioInstagram, margin, 35 * height / 100, width - 2 * margin);
+
+
     sketch.textSize(120 * lineHeight / 100);
     sketch.textStyle(sketch.NORMAL);
     sketch.text(labTexto, margin, 40 * height / 100, width - 2 * margin);
@@ -52,11 +64,6 @@ export const handler = ({ inputs, mechanic, sketch }) => {
     sketch.textSize(80 * lineHeight / 100);
     sketch.textStyle(sketch.NORMAL);
     sketch.text(labProfeNombre, margin, 80 * height / 100, width - 2 * margin);
-
-    sketch.textSize(80 * lineHeight / 100);
-    sketch.textStyle(sketch.NORMAL);
-    sketch.text(labProfeMail, margin, 85 * height / 100, width - 2 * margin);
-
 
     // dibujar el codigo QR arriba a la derecha de 150x150 px
     if (img) {
@@ -89,9 +96,19 @@ export const inputs = {
   default: "2025-01",
   label: "labSemestre"
   },
+  socioNombre: { 
+    type: "text",
+    default: "Museo Interactivo Mirador",
+    label: "socioNombre"
+    },
+    socioInstagram: { 
+      type: "text",
+      default: "@mim",
+      label: "socioInstagram"
+      },
   labTexto: { 
     type: "text",
-    default: "lista de acceso",
+    default: "convocatoria obras estudiantiles",
     label: "labTexto"
     },
   labProfeNombre: {
@@ -103,11 +120,6 @@ export const inputs = {
     type: "text",
     default: "más info:",
     label: "labProfeMasInfo"
-  },
-  labProfeMail: {
-  type: "text",
-  default: "aaron.montoya@mail.udp.cl",
-  label: "labProfeMail"
   },
   color1: {
   type: "color",
