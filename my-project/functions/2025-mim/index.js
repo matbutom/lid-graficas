@@ -18,6 +18,7 @@ export const handler = ({ inputs, mechanic, sketch }) => {
     // }
   };
 
+
   sketch.setup = () => {
     sketch.createCanvas(width, height);
   };
