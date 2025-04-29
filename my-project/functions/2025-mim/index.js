@@ -1,6 +1,6 @@
 export const handler = ({ inputs, mechanic, sketch }) => {
   // inputs
-  const { labNombre, labSemestre, labInstagram, socioNombre, socioInstagram,labTexto, labProfeMasInfo, labProfeNombre, labProfeMail, color1, imagen } = inputs;
+  const { labNombre, labSemestre, labInstagram, socioNombre, socioInstagram,labTexto, labProfeNombre, color1, imagen } = inputs;
   const widthCarta = 8.5;
   const heightCarta = 11;
   const escala = 100;
@@ -13,9 +13,9 @@ export const handler = ({ inputs, mechanic, sketch }) => {
     if (imagen) {
       img = sketch.loadImage(URL.createObjectURL(imagen));
     }
-    // else {
-    //   img = sketch.loadImage("static/qr_lab.jpg");
-    // }
+    else {
+      img = sketch.loadImage("static/qr_2025_mim.jpg");
+    }
   };
 
 
@@ -52,14 +52,9 @@ export const handler = ({ inputs, mechanic, sketch }) => {
     sketch.textStyle(sketch.NORMAL);
     sketch.text(socioInstagram, margin, 35 * height / 100, width - 2 * margin);
 
-
     sketch.textSize(120 * lineHeight / 100);
     sketch.textStyle(sketch.NORMAL);
     sketch.text(labTexto, margin, 40 * height / 100, width - 2 * margin);
-
-    sketch.textSize(80 * lineHeight / 100);
-    sketch.textStyle(sketch.NORMAL);
-    sketch.text(labProfeMasInfo, margin, 75 * height / 100, width - 2 * margin);
 
     sketch.textSize(80 * lineHeight / 100);
     sketch.textStyle(sketch.NORMAL);
@@ -97,29 +92,24 @@ export const inputs = {
   label: "labSemestre"
   },
   socioNombre: { 
-    type: "text",
-    default: "Museo Interactivo Mirador",
-    label: "socioNombre"
-    },
-    socioInstagram: { 
-      type: "text",
-      default: "@mim",
-      label: "socioInstagram"
-      },
+  type: "text",
+  default: "Museo Interactivo Mirador",
+  label: "socioNombre"
+  },
+  socioInstagram: { 
+  type: "text",
+  default: "@mim",
+  label: "socioInstagram"
+  },
   labTexto: { 
-    type: "text",
-    default: "convocatoria obras estudiantiles",
-    label: "labTexto"
-    },
+  type: "text",
+  default: "convocatoria obras estudiantiles",
+  label: "labTexto"
+  },
   labProfeNombre: {
   type: "text",
   default: "aarón montoya",
   label: "labProfeNombre"
-  },
-  labProfeMasInfo: {
-    type: "text",
-    default: "más info:",
-    label: "labProfeMasInfo"
   },
   color1: {
   type: "color",
