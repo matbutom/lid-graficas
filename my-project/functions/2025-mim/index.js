@@ -1,6 +1,6 @@
 export const handler = ({ inputs, mechanic, sketch }) => {
   // inputs
-  const { labNombre, labInstagram, labImagen, socioNombre, socioInstagram, socioImagen, labTexto, qrTextoAdicional, color1, qrImagen, qrTexto } = inputs;
+  const { labNombre, labInstagram, labImagen, socioNombre, socioInstagram, socioImagen, labTexto, qrTextoAdicional, color1, qrImagen, qrTexto, animarFondo } = inputs;
   const widthCarta = 8.5;
   const heightCarta = 11;
   const escala = 100;
@@ -49,23 +49,40 @@ export const handler = ({ inputs, mechanic, sketch }) => {
     sketch.textSize(200 * lineHeight / 100);
     sketch.textFont(cirrusCumulus);
 
-    const margen = 10; // Margen interno de 10 píxeles
+    const margen = 10;
     const lineHeight = 5 * height / 100;
-    const espacioVertical = 15; // Espacio vertical entre nombre e Instagram
-    const numRepetitions = 40; // Número de repeticiones del texto de fondo
-    const alphaValue = 70; // Transparencia de las repeticiones (0-255)
-    const trazoGrosor = 1.5; // Grosor del trazo para el texto principal
-    const trazoColor = color1; // Color del trazo (mismo que el texto principal)
+    const espacioVertical = 15;
+    const numRepetitions = 40;
+    const alphaValue = 70;
+    const trazoGrosor = 1.5;
+    const trazoColor = color1;
+    const minSizeFondo = 50 * lineHeight / 100;
+    const maxSizeFondo = 250 * lineHeight / 100;
 
-    for (let i = 0; i < numRepetitions; i++) {
-      const randomX = sketch.random(width);
-      const randomY = sketch.random(height);
-      const randomSize = sketch.random(100, 250) * lineHeight / 100;
-      const randomColor = sketch.color(sketch.random(255), sketch.random(255), sketch.random(255), alphaValue);
+    if (animarFondo) {
+      // Dibujar el fondo animado
+      for (let i = 0; i < numRepetitions; i++) {
+        const randomX = sketch.random(width);
+        const randomY = sketch.random(height);
+        const randomSize = sketch.random(minSizeFondo, maxSizeFondo);
+        const randomColor = sketch.color(sketch.random(255), sketch.random(255), sketch.random(255), alphaValue);
 
-      sketch.textSize(randomSize);
-      sketch.fill(randomColor);
-      sketch.text(labTexto, randomX, randomY);
+        sketch.textSize(randomSize);
+        sketch.fill(randomColor);
+        sketch.text(labTexto, randomX, randomY);
+      }
+    } else {
+      // Dibujar el fondo estático
+      for (let i = 0; i < numRepetitions; i++) {
+        const randomX = sketch.random(width);
+        const randomY = sketch.random(height);
+        const randomSize = sketch.random(100, 250) * lineHeight / 100; // Tamaños estáticos
+        const randomColor = sketch.color(sketch.random(255), sketch.random(255), sketch.random(255), alphaValue);
+
+        sketch.textSize(randomSize);
+        sketch.fill(randomColor);
+        sketch.text(labTexto, randomX, randomY);
+      }
     }
 
     // Dibujar el texto principal con trazo
@@ -74,7 +91,7 @@ export const handler = ({ inputs, mechanic, sketch }) => {
     sketch.fill(color1);
     sketch.textSize(200 * lineHeight / 100);
     sketch.text(labTexto, width / 100, height / 2.1, width - 2 * margen);
-    sketch.noStroke(); // Desactivar el trazo para los demás elementos
+    sketch.noStroke();
 
     // Resto del dibujo (nombres, logos, QR) - SIN CAMBIOS
     sketch.textAlign(sketch.LEFT, sketch.TOP);
@@ -161,10 +178,10 @@ export const inputs = {
     default: "#000000",
     label: "Color del Texto"
   },
-  qrImagen: {
-    type: "image",
-    label: "qrImagen"
-  },
+  // qrImagen: {
+  //   type: "image",
+  //   label: "qrImagen"
+  // },
   qrTexto: {
     type: "text",
     default: "formulario inscripción",
@@ -175,18 +192,26 @@ export const inputs = {
     default: "hasta viernes 02 mayo 2025",
     label: "qrTextoAdicional"
   },
-  labImagen: {
-    type: "image",
-    label: "logoLab"
-  },
-  socioImagen: {
-    type: "image",
-    label: "socioImagen"
+  // labImagen: {
+  //   type: "image",
+  //   label: "logoLab"
+  // },
+  // socioImagen: {
+  //   type: "image",
+  //   label: "socioImagen"
+  // },
+  animarFondo: {
+    type: "boolean",
+    default: false,
+    label: "Animar Fondo"
   },
 };
 
 export const presets = {};
 
 export const settings = {
-  engine: require("@mechanic-design/engine-p5")
+  engine: require("@mechanic-design/engine-p5"),
+  showMultipleExports: true,
+  animated: false,
+  hideScaleToFit: true,
 };
