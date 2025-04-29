@@ -1,6 +1,6 @@
 export const handler = ({ inputs, mechanic, sketch }) => {
   // inputs
-  const { labNombre, labInstagram, labImagen, socioNombre, socioInstagram, socioImagen, labTexto, qrTextoAdicional, color1, qrImagen, qrTexto } = inputs;
+  const { loadFont, font1, font2, labNombre, labInstagram, labImagen, socioNombre, socioInstagram, socioImagen, labTexto, qrTextoAdicional, color1, qrImagen, qrTexto } = inputs;
   const widthCarta = 8.5;
   const heightCarta = 11;
   const escala = 100;
@@ -30,10 +30,12 @@ export const handler = ({ inputs, mechanic, sketch }) => {
       imgSocio = sketch.loadImage(URL.createObjectURL(logoSocio));
     }
     else {
-      imgSocio = sketch.loadImage("static/mim-color.png");
+      imgSocio = sketch.loadImage("static/mim_logo.svg");
     }
+    
+    font1 = loadFont('static/CirrusCumulus.ttf');
+    font2 = loadFont('static/terminal-grotesque-webfont.ttf');
   };
-
 
   sketch.setup = () => {
     sketch.createCanvas(width, height);
@@ -81,14 +83,14 @@ export const handler = ({ inputs, mechanic, sketch }) => {
 
     if (imgLab) {
       // tamano del logo
-      const logoSize = 150; 
+      const logoSize = 170; 
       sketch.imageMode(sketch.CENTER);
       sketch.image(imgLab, 50 * width / 100, 15 * height / 100, logoSize, logoSize);
     }
 
     if (imgSocio) {
       // tamano del logo
-      const logoSize = 150; 
+      const logoSize = 120; 
       sketch.imageMode(sketch.CENTER);
       sketch.image(imgSocio, 50 * width / 100, 35 * height / 100, logoSize, logoSize);
     }
