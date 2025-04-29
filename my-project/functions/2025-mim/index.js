@@ -96,6 +96,7 @@ export const handler = ({ inputs, mechanic, sketch }) => {
     if (imgQR) {
       const qrCodeSize = 100;
       sketch.imageMode(sketch.CENTER);
+      sketch.blendMode(sketch.MULTIPLY);
       sketch.image(imgQR, width / 10, height - qrCodeSize / 1.5 - margen * 2, qrCodeSize, qrCodeSize);
       sketch.textSize(30 * lineHeight / 100);
       sketch.textStyle(sketch.NORMAL);
