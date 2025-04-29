@@ -1,20 +1,36 @@
 export const handler = ({ inputs, mechanic, sketch }) => {
   // inputs
-  const { labNombre, labSemestre, labInstagram, socioNombre, socioInstagram,labTexto, labProfeNombre, color1, imagen } = inputs;
+  const { labNombre, labInstagram, labImagen, socioNombre, socioInstagram, socioImagen, labTexto, qrTextoAdicional, color1, qrImagen, qrTexto } = inputs;
   const widthCarta = 8.5;
   const heightCarta = 11;
   const escala = 100;
   const width = widthCarta * escala;
   const height = heightCarta * escala;
 
-  let img;
+  let imgQR;
+  let imgLab;
+  let imgSocio;
 
   sketch.preload = () => {
-    if (imagen) {
-      img = sketch.loadImage(URL.createObjectURL(imagen));
+    if (qrImagen) {
+      imgQR = sketch.loadImage(URL.createObjectURL(imagen));
     }
     else {
-      img = sketch.loadImage("static/qr_2025_mim.jpg");
+      imgQR = sketch.loadImage("static/qr_2025_mim.jpg");
+    }
+
+    if (labImagen) {
+      imgLab = sketch.loadImage(URL.createObjectURL(logoLab));
+    }
+    else {
+      imgLab = sketch.loadImage("static/lid_icon_ig_03.jpg");
+    }
+
+    if (socioImagen) {
+      imgSocio = sketch.loadImage(URL.createObjectURL(logoSocio));
+    }
+    else {
+      imgSocio = sketch.loadImage("static/mim-color.png");
     }
   };
 
@@ -32,44 +48,51 @@ export const handler = ({ inputs, mechanic, sketch }) => {
     const margin = 10 * width / 100;
     const lineHeight = 5 * height / 100;
 
-    sketch.textSize(70 * lineHeight / 100);
-    sketch.textStyle(sketch.BOLD);
-    sketch.text(labSemestre, margin, 5 * height / 100, width - 2 * margin);
-
-    sketch.textSize(70 * lineHeight / 100);
+    sketch.textSize(50 * lineHeight / 100);
     sketch.textStyle(sketch.NORMAL);
-    sketch.text(labNombre, margin, 15 * height / 100, width - 2 * margin);
+    sketch.textAlign(sketch.CENTER, sketch.CENTER);
+    sketch.text(labNombre + " " + labInstagram, margin, 5 * height / 100, width - 2 * margin);
 
-    sketch.textSize(70 * lineHeight / 100);
+    sketch.textSize(50 * lineHeight / 100);
     sketch.textStyle(sketch.NORMAL);
-    sketch.text(labInstagram, margin, 20 * height / 100, width - 2 * margin);
+    sketch.textAlign(sketch.CENTER, sketch.CENTER);
+    sketch.text(socioNombre + " " + socioInstagram, margin, 25 * height / 100, width - 2 * margin);
 
-    sketch.textSize(70 * lineHeight / 100);
+    sketch.textSize(100 * lineHeight / 100);
+    sketch.textAlign(sketch.CENTER, sketch.CENTER);
     sketch.textStyle(sketch.NORMAL);
-    sketch.text(socioNombre, margin, 30 * height / 100, width - 2 * margin);
+    sketch.text(labTexto, margin, 50 * height / 100, width - 2 * margin);
 
-    sketch.textSize(70 * lineHeight / 100);
-    sketch.textStyle(sketch.NORMAL);
-    sketch.text(socioInstagram, margin, 35 * height / 100, width - 2 * margin);
-
-    sketch.textSize(120 * lineHeight / 100);
-    sketch.textStyle(sketch.NORMAL);
-    sketch.text(labTexto, margin, 40 * height / 100, width - 2 * margin);
-
-    sketch.textSize(80 * lineHeight / 100);
-    sketch.textStyle(sketch.NORMAL);
-    sketch.text(labProfeNombre, margin, 80 * height / 100, width - 2 * margin);
-
+  
     // dibujar el codigo QR arriba a la derecha de 150x150 px
-    if (img) {
+    if (imgQR) {
       // tamano del codigo QR
-      const qrCodeSize = 200; 
-      
+      const qrCodeSize = 120; 
+
+      sketch.textSize(80 * lineHeight / 100);
+      sketch.textStyle(sketch.NORMAL);
+      sketch.text(qrTexto, margin, 70 * height / 100, width - 2 * margin);
+      sketch.text(qrTextoAdicional, margin, 90 * height / 100, width - 2 * margin);
       // posY: arriba con margen de 50px
-      const qrCodeY = 50; 
       sketch.imageMode(sketch.CENTER);
-      sketch.image(img, 50 * width / 100, 60 * height / 100, qrCodeSize, qrCodeSize);
+      sketch.image(imgQR, 50 * width / 100, 80 * height / 100, qrCodeSize, qrCodeSize);
+
     }
+
+    if (imgLab) {
+      // tamano del logo
+      const logoSize = 150; 
+      sketch.imageMode(sketch.CENTER);
+      sketch.image(imgLab, 50 * width / 100, 15 * height / 100, logoSize, logoSize);
+    }
+
+    if (imgSocio) {
+      // tamano del logo
+      const logoSize = 150; 
+      sketch.imageMode(sketch.CENTER);
+      sketch.image(imgSocio, 50 * width / 100, 35 * height / 100, logoSize, logoSize);
+    }
+
 
     mechanic.done();
   };
@@ -78,7 +101,7 @@ export const handler = ({ inputs, mechanic, sketch }) => {
 export const inputs = {
   labNombre: {
   type: "text",
-  default: "laboratorio de interacción digital",
+  default: "lab de interacción digital",
   label: "labNombre"
   },
   labInstagram: { 
@@ -98,7 +121,7 @@ export const inputs = {
   },
   socioInstagram: { 
   type: "text",
-  default: "@mim",
+  default: "@mim.museo",
   label: "socioInstagram"
   },
   labTexto: { 
@@ -106,20 +129,34 @@ export const inputs = {
   default: "convocatoria obras estudiantiles",
   label: "labTexto"
   },
-  labProfeNombre: {
-  type: "text",
-  default: "aarón montoya",
-  label: "labProfeNombre"
-  },
+
   color1: {
   type: "color",
   model: "hex",
   default: "#000000",
   label: "Color del Texto"
   },
-  imagen: {
+  qrImagen: {
   type: "image",
-  label: "codigoQR"
+  label: "qrImagen"
+  },
+  qrTexto: {
+    type: "text",
+    default: "formulario inscripción",
+    label: "qrTexto"
+  },
+  qrTextoAdicional: { 
+    type: "text",
+    default: "hasta viernes 02 mayo 2025",
+    label: "qrTextoAdicional"
+    },
+  labImagen: {
+    type: "image",
+    label: "logoLab"
+  },
+  socioImagen: {
+    type: "image",
+    label: "socioImagen"
   },
 };
 
