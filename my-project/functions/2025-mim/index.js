@@ -45,14 +45,38 @@ export const handler = ({ inputs, mechanic, sketch }) => {
   sketch.draw = () => {
     sketch.background("#FFFFFF");
     sketch.noStroke();
-    sketch.fill(color1);
-    sketch.textAlign(sketch.LEFT, sketch.TOP); // Alineación general para facilitar el posicionamiento en esquinas
+    sketch.textAlign(sketch.CENTER, sketch.CENTER);
+    sketch.textSize(200 * lineHeight / 100);
+    sketch.textFont(cirrusCumulus);
 
     const margen = 10; // Margen interno de 10 píxeles
     const lineHeight = 5 * height / 100;
     const espacioVertical = 15; // Espacio vertical entre nombre e Instagram
+    const numRepetitions = 40; // Número de repeticiones del texto de fondo
+    const alphaValue = 70; // Transparencia de las repeticiones (0-255)
+    const trazoGrosor = 1.5; // Grosor del trazo para el texto principal
+    const trazoColor = color1; // Color del trazo (mismo que el texto principal)
 
-    // Nombre del laboratorio e Instagram (arriba, izquierda con margen)
+    for (let i = 0; i < numRepetitions; i++) {
+      const randomX = sketch.random(width);
+      const randomY = sketch.random(height);
+      const randomSize = sketch.random(100, 250) * lineHeight / 100;
+      const randomColor = sketch.color(sketch.random(255), sketch.random(255), sketch.random(255), alphaValue);
+
+      sketch.textSize(randomSize);
+      sketch.fill(randomColor);
+      sketch.text(labTexto, randomX, randomY);
+    }
+
+    // Dibujar el texto principal con trazo
+    sketch.strokeWeight(trazoGrosor);
+    sketch.stroke(trazoColor);
+    sketch.fill(color1);
+    sketch.textSize(200 * lineHeight / 100);
+    sketch.text(labTexto, width / 100, height / 2.1, width - 2 * margen);
+    sketch.noStroke(); // Desactivar el trazo para los demás elementos
+
+    // Resto del dibujo (nombres, logos, QR) - SIN CAMBIOS
     sketch.textAlign(sketch.LEFT, sketch.TOP);
     sketch.textSize(50 * lineHeight / 100);
     sketch.textStyle(sketch.NORMAL);
@@ -61,7 +85,6 @@ export const handler = ({ inputs, mechanic, sketch }) => {
     sketch.textSize(35 * lineHeight / 100);
     sketch.text(labInstagram, margen, margen + (40 * lineHeight / 100) + espacioVertical);
 
-    // Nombre del socio e Instagram (arriba, derecha con margen)
     sketch.textAlign(sketch.RIGHT, sketch.TOP);
     sketch.textSize(50 * lineHeight / 100);
     sketch.textStyle(sketch.NORMAL);
@@ -70,51 +93,30 @@ export const handler = ({ inputs, mechanic, sketch }) => {
     sketch.textSize(35 * lineHeight / 100);
     sketch.text(socioInstagram, width - margen, margen + (40 * lineHeight / 100) + espacioVertical);
 
-    // Texto de convocatoria (centro con animación de color)
-    sketch.textAlign(sketch.CENTER, sketch.CENTER);
-    sketch.textSize(200 * lineHeight / 100);
-    sketch.textStyle(sketch.NORMAL);
-    sketch.textFont(cirrusCumulus);
-
-    const color1Animacion = sketch.color(255, 0, 0); // Rojo
-    const color2Animacion = sketch.color(0, 0, 255); // Azul
-    const velocidadCambio = 0.02; // Velocidad del cambio de color
-    const momento = sketch.frameCount * velocidadCambio;
-    const interpolacion = (Math.sin(momento) + 1) / 2; // Valor entre 0 y 1 para interpolar
-    const colorAnimado = sketch.lerpColor(color1Animacion, color2Animacion, interpolacion);
-    sketch.fill(colorAnimado);
-    sketch.text(labTexto, width / 100, height / 2.1, width - 2 * margen);
-
-    // dibujar el codigo QR (centro inferior)
     if (imgQR) {
       const qrCodeSize = 100;
       sketch.imageMode(sketch.CENTER);
       sketch.image(imgQR, width / 10, height - qrCodeSize / 1.5 - margen * 2, qrCodeSize, qrCodeSize);
-
       sketch.textSize(30 * lineHeight / 100);
       sketch.textStyle(sketch.NORMAL);
       sketch.textFont(spaceGrotesk);
       sketch.textAlign(sketch.LEFT, sketch.BOTTOM);
-      sketch.text(qrTexto, margen, height - margen); // Esquina inferior izquierda
-
-      sketch.textSize(30 * lineHeight / 100);
-      sketch.textStyle(sketch.NORMAL);
-      sketch.textFont(spaceGrotesk);
+      sketch.text(qrTexto, margen, height - margen);
       sketch.textAlign(sketch.RIGHT, sketch.BOTTOM);
-      sketch.text(qrTextoAdicional, width - margen, height - margen - (30 * lineHeight / 100) + 15); // Esquina inferior derecha (un poco arriba del qr)
+      sketch.text(qrTextoAdicional, width - margen, height - margen - (30 * lineHeight / 100) + 15);
     }
 
     if (imgLab) {
       const logoSize = 120;
       sketch.imageMode(sketch.CENTER);
       sketch.blendMode(sketch.MULTIPLY);
-      sketch.image(imgLab, width / 20, height / 10, logoSize, logoSize); // Ajusté la posición
+      sketch.image(imgLab, width / 20, height / 10, logoSize, logoSize);
     }
 
     if (imgSocio) {
       const logoSize = 70;
       sketch.imageMode(sketch.CENTER);
-      sketch.image(imgSocio, width * 0.93, height * 0.11, logoSize, logoSize); // Ajusté la posición
+      sketch.image(imgSocio, width * 0.93, height * 0.11, logoSize, logoSize);
     }
 
     mechanic.done();
