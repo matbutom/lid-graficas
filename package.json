@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "ci": "^2.3.0",
     "my-project": "file:my-project"
   }
 }
