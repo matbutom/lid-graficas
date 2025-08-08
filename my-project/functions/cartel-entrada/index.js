@@ -24,6 +24,7 @@ export const handler = ({ inputs, mechanic, sketch }) => {
     sketch.textSize(lineHeight * 1.2);
     sketch.textStyle(sketch.BOLD);
     sketch.text(textLine0, margin, height * 0.1, width - 2 * margin);
+    sketch.textFont(spaceGrotesk);
 
     sketch.textSize(lineHeight);
     sketch.textStyle(sketch.NORMAL);
