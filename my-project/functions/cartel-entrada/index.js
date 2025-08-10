@@ -2,10 +2,23 @@ export const handler = ({ inputs, mechanic, sketch }) => {
   const { textLine0, textLine1, textLine2, textLine3, color1 } = inputs;
   const width = 1080;
   const height = 1350;
-  let qrCodeImage;
+  let qrInstagramLab;
+  let qrFormularioLab;
+  let cirrusCumulus;
+  let terminalGrotesque;
+  let spaceGrotesk;
+  let imgLab;
 
   sketch.preload = () => {
-    // qrCodeImage = sketch.loadImage('assets/qr_lid_ig.png'); // Ruta actualizada con el nuevo nombre
+    cirrusCumulus = sketch.loadFont("static/CirrusCumulus.ttf");
+    terminalGrotesque = sketch.loadFont(
+      "static/terminal-grotesque-webfont.ttf"
+    );
+    spaceGrotesk = sketch.loadFont("static/SpaceGrotesk-Regular.ttf");
+
+    qrInstagramLab = sketch.loadImage("static/qr_instagram_lid.jpeg");
+    qrFormularioLab = sketch.loadImage("static/qr_formulario.jpeg");
+    imgLab = sketch.loadImage("static/lid_logo_01.png");
   };
 
   sketch.setup = () => {
@@ -19,30 +32,34 @@ export const handler = ({ inputs, mechanic, sketch }) => {
     sketch.textAlign(sketch.CENTER, sketch.TOP);
 
     const margin = width * 0.1;
-    const lineHeight = height / 15;
 
-    sketch.textSize(lineHeight * 1.2);
-    sketch.textStyle(sketch.BOLD);
-    sketch.text(textLine0, margin, height * 0.1, width - 2 * margin);
+    sketch.textSize(100);
     sketch.textFont(spaceGrotesk);
-
-    sketch.textSize(lineHeight);
+    sketch.textLeading(110);
     sketch.textStyle(sketch.NORMAL);
-    sketch.text(textLine1, margin, height * 0.35, width - 2 * margin);
+    sketch.text(textLine0, margin, 30, width - 2 * margin);
 
-    sketch.textSize(lineHeight * 0.8);
-    sketch.text(textLine2, margin, height * 0.50, width - 2 * margin);
+    sketch.textSize(50);
+    sketch.textLeading(50);
+    sketch.textFont(spaceGrotesk);
+    sketch.textStyle(sketch.NORMAL);
+    sketch.text(textLine1, margin, height * 0.75, width + 250);
 
-    sketch.textSize(lineHeight * 0.8);
-    sketch.text(textLine3, margin, height * 0.54, width - 2 * margin);
+    sketch.textSize(50);
+    sketch.textLeading(50);
+    sketch.text(textLine2, margin, height * 0.75, width - 725);
 
-    // Dibujar el código QR arriba a la derecha de 150x150 px
-    if (qrCodeImage) {
-      const qrCodeSize = 150; // Tamaño del código QR
-      const qrCodeX = width - qrCodeSize - 50; // Posición X: Derecha con margen de 50px
-      const qrCodeY = 50; // Posición Y: Arriba con margen de 50px
-      // sketch.image(qrCodeImage, qrCodeX, qrCodeY, qrCodeSize, qrCodeSize);
-    }
+    sketch.textSize(40);
+    sketch.text(textLine3, margin, height * 0.92, width - 2 * margin);
+    sketch.textAlign(sketch.CENTER);
+
+    const qrCodeSize = 400;
+    const imgLabSizeX = 1093;
+    const imgLabSizeY = 360;
+
+    sketch.image(qrFormularioLab, 580, 600, qrCodeSize, qrCodeSize);
+    sketch.image(qrInstagramLab, 90, 600, qrCodeSize, qrCodeSize);
+    sketch.image(imgLab, 250, 80, imgLabSizeX / 2, imgLabSizeY / 2)
 
     mechanic.done();
   };
@@ -51,34 +68,34 @@ export const handler = ({ inputs, mechanic, sketch }) => {
 export const inputs = {
   textLine0: {
     type: "text",
-    default: "lab interacción digital",
-    label: "nombreLab"
+    default: "",
+    label: "nombreLab",
   },
   textLine1: {
     type: "text",
-    default: "@lid.udp",
-    label: "instagram"
+    default: "formulario\ninscripción",
+    label: "formulario",
   },
   textLine2: {
     type: "text",
-    default: "salvador sanfuentes 2221",
-    label: "direccion0"
+    default: "instagram @lid.udp",
+    label: "instagram",
   },
   textLine3: {
     type: "text",
-    default: "tercer piso",
-    label: "direccion1"
+    default: "contacto: aaron.montoya@mail.udp.cl",
+    label: "contacto",
   },
   color1: {
     type: "color",
     model: "hex",
     default: "#000000",
-    label: "Color del Texto"
-  }
+    label: "Color del Texto",
+  },
 };
 
 export const presets = {};
 
 export const settings = {
-  engine: require("@mechanic-design/engine-p5")
+  engine: require("@mechanic-design/engine-p5"),
 };
